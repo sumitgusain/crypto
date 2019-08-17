@@ -1,0 +1,46 @@
+<div class="container" style="padding-top: 40px;">
+  <div class="row" *ngIf="coindata">
+    <div class="card col-md-4">
+      <h3 class="btn btn-primary" style="text-align: center; margin-top: 10px;"><img src="{{coindata.image.thumb}}">
+        {{coindata.id}} <small>({{coindata.symbol}})</small></h3>
+      <div class="list-group">
+        <p class="list-group-item"><i class="fa fa-caret-square-o-up"></i> Rank {{coindata.coingecko_rank}}</p>
+        <p class="list-group-item"><i class="fa fa-diamond"></i> Symbol : {{coindata.symbol | uppercase}}</p>
+        <p class="list-group-item"><i class="fa fa-history"></i> Genesis Date : {{coindata.genesis_date}}</p>
+        <p class="list-group-item"><i class="fa fa-globe"></i> Website : {{coindata.links.homepage[0]}}</p>
+        <p class="list-group-item"><i class="fa fa-gear"></i> BlockChain site : {{coindata.links.blockchain_site[0]}}
+        </p>
+      </div>
+    </div>
+    <div class="card col-md-8">
+      <p>{{coindata.description.en}}</p>
+    </div>
+  </div>
+  <div class="table-responsive table-sm" *ngIf="coindata" style="padding-top: 20px;">
+    <table class="table table-bordered">
+      <thead class="thead-light">
+        <tr>
+          <th>Market Cap</th>
+          <th>Change (24h)</th>
+          <th>Circulating Supply</th>
+          <th>Max Supply</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>${{coindata.market_data.market_cap.usd | number : '4.2-2'}} USD</td>
+          <td>${{coindata.market_data.price_change_percentage_24h| number : '1.2-2' }} %</td>
+          <td>{{coindata.market_data.circulating_supply| number : '4.2-2'}} {{coindata.symbol | uppercase }}</td>
+          <td>{{coindata.market_data.total_supply| number : '4.2-2'}} {{coindata.symbol | uppercase }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="container">
+  <div class="col-sm-6 text-center list-group-item">
+    <h3 class="container btn btn-primary btn-block">{{coindata.id}} Price View Chart</h3>
+    <app-pricechartview></app-pricechartview>
+  </div>
+</div>
+<ngx-spinner></ngx-spinner>

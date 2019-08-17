@@ -1,0 +1,65 @@
+<div style="text-align: center;
+  font-size: 27px;">
+    <b style="    background-color: #e82020;
+   padding: 0px 10px;
+   border-radius: 7px;
+   color: white;">FAVOURITE CRYPTO'S</b>
+</div>
+<div class="container-fluid table-responsive">
+    <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th *ngIf="displaycheckbox" class="checkboxclass"></th>
+                <th>Favorite</th>
+                <th>Rank</th>
+                <th>Name</th>
+                <th><i (click)="displaymarketsort(direction='desc', value='marketcap')" class="fa fa-caret-down"></i>
+                    Market Cap <i (click)="displaymarketsort(direction='asc', value='marketcap')" class="fa fa-caret-up"></i></th>
+                <th><i (click)="displaysort(direction='desc', value='price')" class="fa fa-caret-down"></i> Price <i
+                        (click)="displaysort(direction='asc', value='price')" class="fa fa-caret-up"></i></th>
+                <th>Volume (24h)</th>
+                <th>Circulating Supply</th>
+                <th>Change (24h)</th>
+                <th>Price Graph (24h)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr (press)="checkboxdisplay()" (dblclick)="showpricepage($event, currency.id)"
+                *ngFor="let currency of currencylistarray | paginate: { itemsPerPage:50, currentPage: p}; let i=index">
+                <td *ngIf="displaycheckbox">
+                    <mat-checkbox (change)="checkvalue($event, value=currency.id)" class="example-margin">
+                    </mat-checkbox>
+                </td>
+                <td>
+                    <a id="{{currency.id}}" (click)="addfavorite(id=currency.id)"><i class="fa fa-star"
+                            [ngClass]="checkingFav(currency.id)? 'yellowclass' : 'nocolorclass'"></i></a>&nbsp;&nbsp;
+
+                    <a id="{{currency.id}}" (click)="removefavorite(currency.id)? 'yellowclass' : 'nocolorclass'"><i
+                            class="fa fa-trash-o"></i></a>
+                </td>
+                <td>{{currency.market_cap_rank}}</td>
+                <td style="cursor:pointer"><a (click)="displaycoindetail($event, currency.id)">{{currency.name}}</a>
+                </td>
+                <td>${{currency.market_cap | number : '4.2-2'}}</td>
+                <td>${{currency.current_price | number : '2.2-2'}}</td>
+                <td>${{currency.total_volume | number : '4.2-2' }}</td>
+                <td>{{currency.circulating_supply | number : '4.2-2'}} <span
+                        class="hidden-xs">{{currency.symbol | uppercase}}</span>
+                </td>
+                <td id="percentageChange"
+                    [ngClass]="currency.market_cap_change_percentage_24h > 0 ? 'classgreen' : 'classred'">
+                    {{currency.market_cap_change_percentage_24h | number : '1.2-2' }} %</td>
+                <td (click)="showpricepage($event, currency.id)">
+                    <button type="button" class="btn btn-primary btn-sm">GRAPH VIEW</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="12">
+                    <pagination-controls class="my-pagination" (pageChange)="p = $event" previousLabel="Previous"
+                        nextLabel="Next" maxSize="0" responsive="true"></pagination-controls>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<ngx-spinner></ngx-spinner>

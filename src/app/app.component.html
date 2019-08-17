@@ -1,0 +1,34 @@
+<div class="top" style="background-color: #f1f1f1;">
+  <header class="container-fluid" style="color: black; ">
+    <div class="row quicklook" *ngIf="globalList">
+      <div class="col-md-2">
+        CRYPTOCURRENCIES: <a [routerLink]="['cryptocurrencylist']">{{globalList.data.active_cryptocurrencies}}</a>
+      </div>
+      <div class="col-md-2">
+        MARKETS: <a [routerLink]="['cryptocurrencylist']"> {{globalList.data.markets}} </a>
+      </div>
+      <div class="col-md-3">
+        MARKET CAP: <a [routerLink]="['cryptocurrencylist']">
+          ${{globalList.data.total_market_cap.usd | number : '4.2-2'}} </a>
+      </div>
+      <div class="col-md-3">
+        VOL 24th: <a [routerLink]="['cryptocurrencylist']"> ${{globalList.data.total_volume.usd | number : '4.2-2' }}
+        </a>
+      </div>
+      <div class="col-md-2">
+        BTC DOMINANCE: <a [routerLink]="['detail/bitcoin']">
+          {{ globalList.data.market_cap_percentage.btc | number :'1.2-2' }}% </a>
+      </div>
+    </div>
+  </header>
+</div>
+<nav class="nav navbar">
+  <a class="navbar-brand" [routerLink]="['view']"><i class="fa fa-bitcoin"></i> CryptoCoin</a>
+  <div class="justify-content-end">
+    <ul class="navbar-nav">
+      <li class="nav-item" [routerLink]="['fav']"><b>Favourite</b></li>
+    </ul>
+  </div>
+
+</nav>
+<router-outlet></router-outlet>
